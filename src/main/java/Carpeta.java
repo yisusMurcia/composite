@@ -6,25 +6,29 @@ public class Carpeta extends Componente{
     public Carpeta(String nombre) {
         this.nombre = nombre;
         this.contenido = new ArrayList<>();
-        this.tamanio = 0;
+    }
+
+    public int getTamanio() {
+        int tamanio = 0;
+        for(Componente c: contenido){
+            tamanio += c.getTamanio();
+        }
+        return tamanio;
     }
 
     @Override
     public void aniadir(Componente c) {
         contenido.add(c);
-        tamanio += c.tamanio;
     }
 
     @Override
     public void eliminar(Componente c) {
-        if(contenido.remove(c)){
-            tamanio -= c.tamanio;
-        }
+        contenido.remove(c);
     }
 
     @Override
     public String verDetalles() {
-        StringBuilder detalles= new StringBuilder("Carpeta:" + nombre + ", Tamaño Total: " + tamanio + "KB, Contiene: " + contenido.size() + " elementos");
+        StringBuilder detalles= new StringBuilder("Carpeta: " + nombre + ", Tamaño Total: " + getTamanio() + "KB, Contiene: " + contenido.size() + " elementos");
         for(Componente c: contenido){
             detalles.append("\n").append(c.verDetalles());
         }
